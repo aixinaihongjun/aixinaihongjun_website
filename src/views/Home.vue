@@ -1,18 +1,42 @@
 <template>
   <div class="home">
-    <img alt="Vue logo" src="../assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+    <div class="page">
+      <div class="page-content">
+        <Nav></Nav>
+        <div class="content-area">
+          <div class="animated-sections">
+            <!-- Home Subpage -->
+            <section data-id="home" class="animated-section start-page">
+              <div class="section-content vcentered">
+                <div class="row">
+                  <div class="col-sm-12 col-md-12 col-lg-12">
+                    <div class="title-block">
+                      <h2>Alex Smith</h2>
+                      <div class="sp-subtitle">Web Designer</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </section>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 
 <script>
-// @ is an alias to /src
-import HelloWorld from '@/components/HelloWorld.vue'
-
+import Nav from "@/components/Nav.vue";
 export default {
-  name: 'Home',
+  name: "Home",
   components: {
-    HelloWorld
-  }
-}
+    Nav,
+  },
+};
 </script>
+<style>
+.animated-section {
+  opacity: 1 !important;
+  visibility: visible !important;
+}
+</style>

@@ -2,6 +2,19 @@ import Vue from 'vue'
 import App from './App.vue'
 import router from './router'
 import store from './store'
+// 引入全局CSS文件
+import '@/assets/css/main.css'
+import '@/assets/css/icomoon.css'
+import '@/assets/css/style.css'
+import '@/assets/css/reset.css'
+import '@/assets/css/bootstrap-grid.min.css'
+import '@/assets/css/animations.css'
+import '@/assets/css/perfect-scrollbar.css'
+import '@/assets/css/owl.carousel.css'
+import '@/assets/css/magnific-popup.css'
+// 引入element-ui
+import ElementUI from 'element-ui';
+import 'element-ui/lib/theme-chalk/index.css';
 
 Vue.config.productionTip = false
 
@@ -10,3 +23,6 @@ new Vue({
   store,
   render: h => h(App)
 }).$mount('#app')
+// 使用element-ui
+Vue.use(ElementUI);
+
