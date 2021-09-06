@@ -2068,7 +2068,7 @@ pre code {
     font-size: 1rem;
     line-height: 1.5;
     color: #495057;
-    background-color: #fff;
+    /* background-color: #fff; */
     background-clip: padding-box;
     border: 1px solid #ced4da;
     border-radius: 0.25rem;
@@ -2094,7 +2094,7 @@ pre code {
 
 .form-control:focus {
     color: #495057;
-    background-color: #fff;
+    /* background-color: #fff; */
     border-color: #eaf8fd;
     outline: 0;
     -webkit-box-shadow: 0 0 0 0.2rem rgba(120, 213, 239, 0.25);
@@ -2236,7 +2236,7 @@ select.form-control-lg:not([size]):not([multiple]),
 }
 
 .form-group {
-    margin-bottom: 1rem;
+    margin-bottom: 0;
 }
 
 .form-text {
@@ -10791,9 +10791,11 @@ h5,
 }
 
 .form-control {
-    height: 52px !important;
-    background: #fff !important;
-    color: #000000 !important;
+    height: 42px !important;
+    border: 2px solid #999;
+    border-radius: 5px !important;
+    /* background: #fff !important; */
+    color: #fff !important;
     font-size: 18px;
     border-radius: 0px;
     -webkit-box-shadow: none !important;
@@ -10802,11 +10804,11 @@ h5,
 
 .form-control:focus,
 .form-control:active {
-    border-color: #000000;
+    border-color: #999;
 }
 
 textarea.form-control {
-    height: inherit !important;
+    height: 164.4px !important;
 }
 
 

@@ -1,8 +1,27 @@
 <template>
   <div id="app">
-    <router-view/>
+    <div class="page">
+      <div class="page-content">
+        <Nav></Nav>
+        <div class="content-area">
+          <div class="animated-sections">
+            <router-view />
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 </template>
+
+<script>
+import Nav from "@/components/Nav.vue";
+export default {
+  name: "App",
+  components: {
+    Nav,
+  },
+};
+</script>
 
 <style lang="scss">
 #app {
@@ -21,7 +40,7 @@
     color: #2c3e50;
 
     &.router-link-exact-active {
-      color: #42b983;
+      color: #04b4e0;
     }
   }
 }

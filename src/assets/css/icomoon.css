@@ -23,6 +23,13 @@
        url('//at.alicdn.com/t/font_2778504_nifxaof3jn.ttf?t=1630336587132') format('truetype');
 }
 
+@font-face {
+  font-family: 'iconfont';  /* Project id 2779886 */
+  src: url('//at.alicdn.com/t/font_2779886_vjh7otktuhd.woff2?t=1630393854151') format('woff2'),
+       url('//at.alicdn.com/t/font_2779886_vjh7otktuhd.woff?t=1630393854151') format('woff'),
+       url('//at.alicdn.com/t/font_2779886_vjh7otktuhd.ttf?t=1630393854151') format('truetype');
+}
+
 .iconfont {
   font-family: "iconfont" !important;
   font-style: normal;

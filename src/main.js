@@ -15,6 +15,16 @@ import '@/assets/css/magnific-popup.css'
 // 引入element-ui
 import ElementUI from 'element-ui';
 import 'element-ui/lib/theme-chalk/index.css';
+// 引入百度地图
+import BaiduMap from 'vue-baidu-map';
+
+// 使用element-ui
+Vue.use(ElementUI);
+// 注册百度地图
+Vue.use(BaiduMap, {
+  // ak 是在百度地图开发者平台申请的密钥 详见 http://lbsyun.baidu.com/apiconsole/key */
+  ak: 'YOUR_APP_KEY'
+})
 
 Vue.config.productionTip = false
 
@@ -23,6 +33,3 @@ new Vue({
   store,
   render: h => h(App)
 }).$mount('#app')
-// 使用element-ui
-Vue.use(ElementUI);
-
