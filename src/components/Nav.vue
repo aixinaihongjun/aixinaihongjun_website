@@ -2,13 +2,14 @@
   <div class="nav-components">
     <header id="site_header" class="header mobile-menu-hide colomn">
       <ul class="main-menu">
-        <li v-for="nav in navs" :key="nav.title" @click="changeActive(nav)">
+        <li
+          v-for="nav in navs"
+          :key="nav.title"
+          @click="changeActive(nav)"
+          :class="{ active: nav.isActive }"
+        >
           <router-link :to="nav.path">
-            <span
-              class="menu-icon iconfont"
-              v-html="nav.icon"
-              :class="{ active: nav.isActive }"
-            ></span>
+            <span class="menu-icon iconfont" v-html="nav.icon"></span>
             <span class="link-text">{{ nav.title }}</span>
           </router-link>
         </li>
@@ -92,7 +93,7 @@ export default {
   padding: 65px 0 45px;
   /* background: #d5d5d5; */
 }
-.active {
+ul.main-menu li.active a {
   color: #04b4e0 !important;
 }
 @media only screen and (min-width: 1300px) {

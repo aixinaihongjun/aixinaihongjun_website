@@ -10,269 +10,49 @@
           <div class="col-xs-12 col-sm-12">
             <!-- Portfolio Content -->
             <div class="portfolio-content">
-              <ul class="portfolio-filters">
-                <li class="active">
-                  <a class="filter btn btn-sm btn-link" data-group="category_all">All</a>
-                </li>
-                <li>
-                  <a class="filter btn btn-sm btn-link" data-group="category_detailed"
-                    >Detailed</a
-                  >
-                </li>
-                <li>
-                  <a class="filter btn btn-sm btn-link" data-group="category_mockups"
-                    >Mockups</a
-                  >
-                </li>
-                <li>
-                  <a class="filter btn btn-sm btn-link" data-group="category_soundcloud"
-                    >SoundCloud</a
-                  >
-                </li>
-                <li>
-                  <a class="filter btn btn-sm btn-link" data-group="category_vimeo-videos"
-                    >Vimeo Videos</a
-                  >
-                </li>
-                <li>
-                  <a
-                    class="filter btn btn-sm btn-link"
-                    data-group="category_youtube-videos"
-                    >YouTube Videos</a
-                  >
-                </li>
-              </ul>
 
               <!-- Portfolio Grid -->
               <div class="portfolio-grid three-columns">
                 <figure
+                  v-for="photo in photos"
+                  :key="photo.id"
                   class="item lbaudio"
-                  data-groups='["category_all", "category_soundcloud"]'
+                  data-groups='["category_all"]'
                 >
                   <div class="portfolio-item-img">
-                    <img
-                      src="../assets/images/portfolio-1.jpg"
-                      alt="SoundCloud Audio"
-                      title=""
-                    />
+                    <img :src="photo.url" :alt="photo.title" title="" />
                     <a
-                      @click="dialogVisible = true"
+                      @click="(dialogVisible = true), getPhotoDetail(photo)"
                       class="lightbox mfp-iframe"
-                      title="SoundCloud Audio"
+                      :title="photo.title"
                     ></a>
-                    <el-dialog
-                      title="提示"
-                      :visible.sync="dialogVisible"
-                      width="80%"
-                      :before-close="handleClose"
-                      :modal-append-to-body="false"
-                    >
-                      <span>
-                        <img src="../assets/images/portfolio-1.jpg" alt="" style="width:100%">
-                      </span>
-                      <span slot="footer" class="dialog-footer">
-                        <el-button @click="dialogVisible = false">取 消</el-button>
-                        <el-button type="primary" @click="dialogVisible = false"
-                          >确 定</el-button
-                        >
-                      </span>
-                    </el-dialog>
                   </div>
 
-                  <h4 class="name">SoundCloud Audio</h4>
-                  <span class="category">SoundCloud</span>
+                  <h4 class="name">{{ photo.title }}</h4>
+                  <span class="category">{{ photo.category }}</span>
                 </figure>
-
-                <figure
-                  class="item lbaudio"
-                  data-groups='["category_all", "category_soundcloud"]'
+                <el-dialog
+                  :title="photoDetail.title"
+                  :visible.sync="dialogVisible"
+                  width="50%"
+                  :before-close="handleClose"
+                  :modal-append-to-body="false"
+                  :append-to-body="true"
                 >
-                  <div class="portfolio-item-img">
+                  <span>
                     <img
-                      src="../assets/images/portfolio-2.jpg"
-                      alt="SoundCloud Audio"
-                      title=""
+                      :src="photoDetail.url"
+                      :alt="photoDetail.title"
+                      style="width: 100%"
                     />
-                    <a
-                      @click="dialogVisible = true"
-                      class="lightbox mfp-iframe"
-                      title="SoundCloud Audio"
-                    ></a>
-                    <el-dialog
-                      title="提示"
-                      :visible.sync="dialogVisible"
-                      width="80%"
-                      :before-close="handleClose"
-                      :modal-append-to-body="false"
+                  </span>
+                  <span slot="footer" class="dialog-footer">
+                    <el-button @click="dialogVisible = false">取 消</el-button>
+                    <el-button type="primary" @click="dialogVisible = false"
+                      >确 定</el-button
                     >
-                      <span>
-                        <img src="../assets/images/portfolio-2.jpg" alt="" style="width:100%">
-                      </span>
-                      <span slot="footer" class="dialog-footer">
-                        <el-button @click="dialogVisible = false">取 消</el-button>
-                        <el-button type="primary" @click="dialogVisible = false"
-                          >确 定</el-button
-                        >
-                      </span>
-                    </el-dialog>
-                  </div>
-
-                  <h4 class="name">SoundCloud Audio</h4>
-                  <span class="category">SoundCloud</span>
-                </figure>
-
-                <figure
-                  class="item lbaudio"
-                  data-groups='["category_all", "category_soundcloud"]'
-                >
-                  <div class="portfolio-item-img">
-                    <img
-                      src="../assets/images/portfolio-3.jpg"
-                      alt="SoundCloud Audio"
-                      title=""
-                    />
-                    <a
-                      @click="dialogVisible = true"
-                      class="lightbox mfp-iframe"
-                      title="SoundCloud Audio"
-                    ></a>
-                    <el-dialog
-                      title="提示"
-                      :visible.sync="dialogVisible"
-                      width="80%"
-                      :before-close="handleClose"
-                      :modal-append-to-body="false"
-                    >
-                      <span>
-                        <img src="../assets/images/portfolio-3.jpg" alt="" style="width:100%">
-                      </span>
-                      <span slot="footer" class="dialog-footer">
-                        <el-button @click="dialogVisible = false">取 消</el-button>
-                        <el-button type="primary" @click="dialogVisible = false"
-                          >确 定</el-button
-                        >
-                      </span>
-                    </el-dialog>
-                  </div>
-
-                  <h4 class="name">SoundCloud Audio</h4>
-                  <span class="category">SoundCloud</span>
-                </figure>
-
-                <figure
-                  class="item lbaudio"
-                  data-groups='["category_all", "category_soundcloud"]'
-                >
-                  <div class="portfolio-item-img">
-                    <img
-                      src="../assets/images/portfolio-4.jpg"
-                      alt="SoundCloud Audio"
-                      title=""
-                    />
-                    <a
-                      @click="dialogVisible = true"
-                      class="lightbox mfp-iframe"
-                      title="SoundCloud Audio"
-                    ></a>
-                    <el-dialog
-                      title="提示"
-                      :visible.sync="dialogVisible"
-                      width="80%"
-                      :before-close="handleClose"
-                      :modal-append-to-body="false"
-                    >
-                      <span>
-                        <img src="../assets/images/portfolio-4.jpg" alt="" style="width:100%">
-                      </span>
-                      <span slot="footer" class="dialog-footer">
-                        <el-button @click="dialogVisible = false">取 消</el-button>
-                        <el-button type="primary" @click="dialogVisible = false"
-                          >确 定</el-button
-                        >
-                      </span>
-                    </el-dialog>
-                  </div>
-
-                  <h4 class="name">SoundCloud Audio</h4>
-                  <span class="category">SoundCloud</span>
-                </figure>
-
-                <figure
-                  class="item lbaudio"
-                  data-groups='["category_all", "category_soundcloud"]'
-                >
-                  <div class="portfolio-item-img">
-                    <img
-                      src="../assets/images/portfolio-5.jpg"
-                      alt="SoundCloud Audio"
-                      title=""
-                    />
-                    <a
-                      @click="dialogVisible = true"
-                      class="lightbox mfp-iframe"
-                      title="SoundCloud Audio"
-                    ></a>
-                    <el-dialog
-                      title="提示"
-                      :visible.sync="dialogVisible"
-                      width="80%"
-                      :before-close="handleClose"
-                      :modal-append-to-body="false"
-                    >
-                      <span>
-                        <img src="../assets/images/portfolio-5.jpg" alt="" style="width:100%">
-                      </span>
-                      <span slot="footer" class="dialog-footer">
-                        <el-button @click="dialogVisible = false">取 消</el-button>
-                        <el-button type="primary" @click="dialogVisible = false"
-                          >确 定</el-button
-                        >
-                      </span>
-                    </el-dialog>
-                  </div>
-
-                  <h4 class="name">SoundCloud Audio</h4>
-                  <span class="category">SoundCloud</span>
-                </figure>
-
-                <figure
-                  class="item lbaudio"
-                  data-groups='["category_all", "category_soundcloud"]'
-                >
-                  <div class="portfolio-item-img">
-                    <img
-                      src="../assets/images/portfolio-6.jpg"
-                      alt="SoundCloud Audio"
-                      title=""
-                    />
-                    <a
-                      @click="dialogVisible = true"
-                      class="lightbox mfp-iframe"
-                      title="SoundCloud Audio"
-                    ></a>
-                    <el-dialog
-                      title="提示"
-                      :visible.sync="dialogVisible"
-                      width="80%"
-                      :before-close="handleClose"
-                      :modal-append-to-body="false"
-                    >
-                      <span>
-                        <img src="../assets/images/portfolio-6.jpg" alt="" style="width:100%">
-                      </span>
-                      <span slot="footer" class="dialog-footer">
-                        <el-button @click="dialogVisible = false">取 消</el-button>
-                        <el-button type="primary" @click="dialogVisible = false"
-                          >确 定</el-button
-                        >
-                      </span>
-                    </el-dialog>
-                  </div>
-
-                  <h4 class="name">SoundCloud Audio</h4>
-                  <span class="category">SoundCloud</span>
-                </figure>
-
+                  </span>
+                </el-dialog>
               </div>
             </div>
             <!-- End of Portfolio Content -->
@@ -286,12 +66,54 @@
 export default {
   name: "Portfolio",
   data() {
-      return {
-        dialogVisible: false
-      };
+    return {
+      dialogVisible: false,
+      photos: [
+        {
+          id: 1,
+          url: require("../assets/images/portfolio-1.jpg"),
+          title: "SoundCloud Audio",
+          category: "SoundCloud",
+          data_group: "category_soundcloud",
+        },
+        {
+          id: 2,
+          url: require("../assets/images/portfolio-2.jpg"),
+          title: "Detailed Project 2",
+          category: "Detailed",
+        },
+        {
+          id: 3,
+          url: require("../assets/images/portfolio-3.jpg"),
+          title: "Vimeo Video 1",
+          category: "Vimeo Videos",
+        },
+        {
+          id: 4,
+          url: require("../assets/images/portfolio-4.jpg"),
+          title: "Detailed Project 1",
+          category: "Detailed",
+        },
+        {
+          id: 5,
+          url: require("../assets/images/portfolio-5.jpg"),
+          title: "Mockup Design 1",
+          category: "Mockups",
+        },
+        {
+          id: 6,
+          url: require("../assets/images/portfolio-6.jpg"),
+          title: "YouTube Video 1",
+          category: "YouTube Videos",
+        },
+      ],
+      photoDetail: {},
+    };
+  },
+  methods: {
+    getPhotoDetail(p) {
+      this.photoDetail = p;
     },
-    methods: {
-      
-    }
+  },
 };
 </script>
