@@ -1,40 +1,110 @@
 <template>
-  <div class="blog-components">
-    <section data-id="blog" class="animated-section">
-      <div class="page-title">
-        <h2>Blog</h2>
-      </div>
+  <div class="single">
+    <section data-id="single" class="animated-section no_padding">
+      <div class="single-page-content">
+        <div class="post-thumbnail">
+          <img :src="article.cover" alt="image" style="width: 100%" />
+        </div>
 
-      <div class="section-content">
-        <div class="row">
-          <div class="col-xs-12 col-sm-12">
-            <div class="blog-masonry two-columns clearfix">
-              <div class="item post-1" v-for="article in articles" :key="article.id">
-                <div class="blog-card">
-                  <div class="media-block">
-                    <div class="category">
-                      <a href="#" :title="article.a_title">{{ article.category }}</a>
-                    </div>
-                    <router-link :to="{ path: '/blog/' + article.id }">
-                      <img
-                        :src="article.cover"
-                        class="size-blog-masonry-image-two-c"
-                        alt="Why I Switched to Sketch For UI Design"
-                        title=""
-                      />
-                      <div class="mask"></div>
-                    </router-link>
-                  </div>
-                  <div class="post-info">
-                    <div class="post-date">{{ article.date }}</div>
-                    <router-link :to="{ path: '/blog/' + article.id }">
-                      <h4 class="blog-item-title">
-                        {{ article.title }}
-                      </h4>
-                    </router-link>
-                  </div>
+        <div class="post-content">
+          <!-- /Entry header -->
+          <header class="entry-header">
+            <!-- Entry meta -->
+            <div class="entry-meta entry-meta-top">
+              <span
+                ><a href="#" rel="category tag">{{ article.category }}</a></span
+              >
+            </div>
+            <!-- /Entry meta -->
+
+            <h2 class="entry-title">{{ article.title }}</h2>
+          </header>
+          <!-- /Entry header -->
+
+          <!-- Entry content -->
+          <div class="entry-content">
+            <div class="row">
+              <div class="col-xs-12 col-sm-12">
+                <div class="col-inner">
+                  <p class="content_mb">
+                    {{ article.content1 }}
+                  </p>
+                  <p class="content_mb">
+                    {{ article.content2 }}
+                  </p>
+
+                  <blockquote class="quote" v-for="quote in article.quote" :key="quote">
+                    {{ quote.content }}
+                    <footer class="quote-author">
+                      <span>{{ quote.author }}</span>
+                    </footer>
+                  </blockquote>
+
+                  <p class="content_mb">
+                    {{ article.content3 }}
+                  </p>
+
+                  <p class="content_mb">
+                    {{ article.content4 }}
+                  </p>
                 </div>
               </div>
+            </div>
+          </div>
+          <!-- /Entry content -->
+
+          <div class="entry-meta entry-meta-bottom">
+            <div class="date-author">
+              <span class="entry-date">
+                <a href="#" rel="bookmark">
+                  <span class="iconfont">&#xe680;</span>
+                  <span class="entry-date"> {{ article.date }}</span>
+                </a>
+              </span>
+              <span class="author vcard">
+                <a class="url fn n" href="#" rel="author">
+                  <span class="iconfont">&#xe82f;</span> LMPixels</a
+                >
+              </span>
+            </div>
+
+            <!-- Share Buttons -->
+            <div class="entry-share btn-group share-buttons">
+              <a
+                href="#"
+                onclick="javascript:window.open(this.href, '', 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=300,width=600');return false;"
+                class="btn"
+                target="_blank"
+                title="Share on Facebook"
+              >
+                <span class="iconfont">&#xe6b2;</span>
+              </a>
+
+              <a
+                href="#"
+                onclick="javascript:window.open(this.href, '', 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=300,width=600');return false;"
+                class="btn"
+                target="_blank"
+                title="Share on Twitter"
+              >
+                <span class="iconfont">&#xe916;</span>
+              </a>
+
+              <a
+                href="#"
+                onclick="javascript:window.open(this.href,'', 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=600,width=600');return false;"
+                class="btn"
+                title="Share on LinkedIn"
+              >
+                <span class="iconfont">&#xe63e;</span>
+              </a>
+            </div>
+            <!-- /Share Buttons -->
+          </div>
+
+          <div class="post-tags">
+            <div class="tags">
+              <a href="#" rel="tag" v-for="tag in article.tags" :key="tag">{{ tag }}</a>
             </div>
           </div>
         </div>
@@ -42,11 +112,17 @@
     </section>
   </div>
 </template>
+
 <script>
 export default {
-  name: "Blog",
+  name: "Single",
+  created() {
+    let articleId = this.$route.params.articleId;
+    this.getArticleDetail(articleId);
+  },
   data() {
     return {
+      article: {},
       articles: [
         {
           id: 1,
@@ -147,5 +223,23 @@ export default {
       ],
     };
   },
+  methods: {
+    getArticleDetail(articleId) {
+      this.articles.forEach((item) => {
+        if (articleId == item.id) {
+          this.article = item;
+        }
+      });
+    },
+  },
 };
 </script>
+
+<style>
+.no_padding {
+  padding: 0 !important;
+}
+.content_mb {
+  margin-bottom: 10px;
+}
+</style>

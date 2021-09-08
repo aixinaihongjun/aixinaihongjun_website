@@ -6,6 +6,7 @@ import Blog from '../views/Blog.vue'
 import Contact from '../views/Contact.vue'
 import Portfolio from '../views/Portfolio.vue'
 import Resume from '../views/Resume.vue'
+import Single from '../views/Single.vue'
 
 Vue.use(VueRouter)
 
@@ -39,6 +40,11 @@ const routes = [
     path: '/resume',
     name: 'Resume',
     component: Resume
+  },
+  {
+    path: '/blog/:articleId',
+    name: 'Single',
+    component: Single
   },
 ]
 

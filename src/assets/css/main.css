@@ -1787,7 +1787,7 @@ textarea.form-control, textarea.form-control:focus {
   line-height: 44px;
   font-size: 44px;
   text-align: center;
-  content: "\e828";
+  /* content: "\e828"; */
   color: #fff;
 }
 
@@ -2182,6 +2182,7 @@ textarea.form-control, textarea.form-control:focus {
   font-size: 32px;
   line-height: 1.3;
   margin: 15px 0 15px 0;
+  font-weight: 600;
 }
 
 .entry-meta.entry-meta-bottom {
@@ -2237,7 +2238,7 @@ textarea.form-control, textarea.form-control:focus {
 
 blockquote {
   padding: 15px 20px;
-  margin: 20px 0;
+  margin: 20px 0!important;
   font-size: 1em;
   border-left: 2px solid #d8d8d8;
   font-style: italic;
