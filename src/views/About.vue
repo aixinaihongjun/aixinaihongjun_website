@@ -135,7 +135,7 @@
         </div>
 
         <div class="row">
-          <div class="col-xs-12 col-sm-12">
+          <div class="col-xs-12 col-sm-4">
             <div class="testimonials owl-carousel">
               <!-- Testimonial 1 -->
               <div class="testimonial">
@@ -159,7 +159,11 @@
                 </div>
               </div>
               <!-- End of Testimonial 1 -->
+            </div>
+          </div>
 
+          <div class="col-xs-12 col-sm-4">
+            <div class="testimonials owl-carousel">
               <!-- Testimonial 2 -->
               <div class="testimonial">
                 <div class="img">
@@ -182,7 +186,11 @@
                 </div>
               </div>
               <!-- End of Testimonial 2 -->
+            </div>
+          </div>
 
+          <div class="col-xs-12 col-sm-4">
+            <div class="testimonials owl-carousel">
               <!-- Testimonial 3 -->
               <div class="testimonial">
                 <div class="img">
@@ -263,6 +271,7 @@ export default {
 <style>
 .testimonials {
   display: flex !important;
+  flex-wrap: wrap;
   flex-grow: 3;
 }
 .testimonial .img {

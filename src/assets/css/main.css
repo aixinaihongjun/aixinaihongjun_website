@@ -2877,6 +2877,7 @@ blockquote {
   line-height: 74px;
   margin: 0;
   text-align: center;
+  font-weight: 600;
 }
 
 .title-block .sp-subtitle {

@@ -1,11 +1,15 @@
 <template>
   <div class="nav-components">
-    <header id="site_header" class="header mobile-menu-hide colomn">
+    <header
+      id="site_header"
+      class="header colomn"
+      :class="{ 'mobile-menu-hide': mobile_menu_hide_default_state }"
+    >
       <ul class="main-menu">
         <li
           v-for="nav in navs"
           :key="nav.title"
-          @click="changeActive(nav)"
+          @click="changeActive(nav), mobileNavOpen()"
           :class="{ active: nav.isActive }"
         >
           <router-link :to="nav.path">
@@ -46,6 +50,17 @@
         <!-- <div class="copyrights">© 2020 All rights reserved.</div> -->
       </div>
     </header>
+    <!-- Mobile Navigation -->
+    <div
+      class="menu-toggle"
+      :class="{ open: open_default_state }"
+      @click="mobileNavOpen()"
+    >
+      <span></span>
+      <span></span>
+      <span></span>
+    </div>
+    <!-- End Mobile Navigation -->
   </div>
 </template>
 
@@ -54,6 +69,8 @@ export default {
   name: "Nav",
   data() {
     return {
+      mobile_menu_hide_default_state: true,
+      open_default_state: false,
       navs: [
         { title: "Home", path: "/", icon: "&#xe603;", isActive: false },
         { title: "About Me", path: "/about", icon: "&#xe60d;", isActive: false },
@@ -71,6 +88,10 @@ export default {
       });
       nav.isActive = true;
     },
+    mobileNavOpen() {
+      this.mobile_menu_hide_default_state = !this.mobile_menu_hide_default_state;
+      this.open_default_state = !this.open_default_state;
+    },
   },
 };
 </script>
@@ -81,11 +102,6 @@ export default {
   display: flex !important;
   box-sizing: border-box;
   /* z-index: 999; */
-}
-.main-menu {
-  flex: right;
-  /* z-index: 999; */
-  height: 100vh;
 }
 .nav-right {
   width: 330px;

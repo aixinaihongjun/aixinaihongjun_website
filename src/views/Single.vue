@@ -1,5 +1,10 @@
 <template>
   <div class="single">
+    <!-- Arrows Nav -->
+    <div class="return_btn">
+      <button @click="returnBlog">返回</button>
+    </div>
+    <!-- End Arrows Nav -->
     <section data-id="single" class="animated-section no_padding">
       <div class="single-page-content">
         <div class="post-thumbnail">
@@ -33,7 +38,7 @@
                     {{ article.content2 }}
                   </p>
 
-                  <blockquote class="quote" v-for="quote in article.quote" :key="quote">
+                  <blockquote class="quote" v-for="quote in article.quote" :key="quote.content">
                     {{ quote.content }}
                     <footer class="quote-author">
                       <span>{{ quote.author }}</span>
@@ -224,6 +229,9 @@ export default {
     };
   },
   methods: {
+    returnBlog() {
+      this.$router.push("/blog");
+    },
     getArticleDetail(articleId) {
       this.articles.forEach((item) => {
         if (articleId == item.id) {
@@ -236,6 +244,21 @@ export default {
 </script>
 
 <style>
+.return_btn {
+  position: relative;
+  top: 6.8px;
+  left: 10px;
+  z-index: 98;
+  list-style: none;
+}
+.return_btn button {
+  cursor: pointer;
+  border-radius: 30px;
+  position: absolute;
+  text-align: center;
+  color: #fff;
+  font-size: 15px;
+}
 .no_padding {
   padding: 0 !important;
 }
