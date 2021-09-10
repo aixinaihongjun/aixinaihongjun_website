@@ -47,7 +47,7 @@
                 <el-dialog
                   :title="photoDetail.title"
                   :visible.sync="dialogVisible"
-                  width="80%"
+                  width="90%"
                   :modal-append-to-body="false"
                   :append-to-body="true"
                 >
