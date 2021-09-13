@@ -32,19 +32,30 @@
         <div class="social-links">
           <ul>
             <li>
-              <a href="#" target="_blank"><span class="iconfont">&#xe6b2;</span></a>
+              <a href="#"><span class="iconfont">&#xe6b2;</span></a>
             </li>
             <li>
-              <a href="#" target="_blank"><span class="iconfont">&#xe916;</span></a>
+              <a href="#"><span class="iconfont">&#xe916;</span></a>
             </li>
             <li>
-              <a href="#" target="_blank"><span class="iconfont">&#xe63e;</span></a>
+              <a href="#"><span class="iconfont">&#xe63e;</span></a>
             </li>
           </ul>
         </div>
 
-        <div class="header-buttons">
-          <a href="#" target="_blank" class="btn btn-primary">Download CV</a>
+        <div class="header-buttons" v-if="!$store.state.userInfo.isLogin">
+          <a href="#" class="btn btn-primary" @click="mobileNavOpen(), toLogin()">登录</a>&nbsp;
+          <a href="#" class="btn btn-primary" @click="mobileNavOpen(), toRegister()"
+            >注册</a
+          >
+        </div>
+
+        <div class="wrapper" v-else>
+          <img
+            src="https://wpimg.wallstcn.com/f778738c-e4f8-4870-b634-56703b4acafe.gif"
+            alt=""
+          />&nbsp; 你好，{{ $store.state.userInfo.username }}&nbsp;&nbsp;
+          <button class="btn btn-primary" @click="exit">退出登录</button>
         </div>
 
         <!-- <div class="copyrights">© 2020 All rights reserved.</div> -->
@@ -92,11 +103,20 @@ export default {
       this.mobile_menu_hide_default_state = !this.mobile_menu_hide_default_state;
       this.open_default_state = !this.open_default_state;
     },
+    toLogin() {
+      this.$router.push("/login");
+    },
+    toRegister() {
+      this.$router.push("/register");
+    },
+    exit() {
+      this.$store.commit("logout");
+    },
   },
 };
 </script>
 
-<style>
+<style lang="scss" scoped>
 .colomn {
   /* width: 416px !important; */
   display: flex !important;
@@ -117,6 +137,20 @@ ul.main-menu li.active a {
     width: 420px;
     /* float: right; */
     /* padding: 65px 30px 45px; */
+  }
+}
+.wrapper {
+  margin-top: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  img {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+  }
+  button {
+    margin: 0;
   }
 }
 </style>

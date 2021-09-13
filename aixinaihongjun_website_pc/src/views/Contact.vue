@@ -99,7 +99,7 @@
                     <div class="help-block with-errors"></div>
                   </div>
 
-                  <div class="form-group form-group-with-icon">
+                  <div class="form-group form-group-with-icon" style="margin: 0">
                     <div class="contact-form-title">Subject</div>
                     <input
                       id="form_subject"
@@ -181,25 +181,40 @@ export default {
       this.center.lat = e.point.lat;
     },
     postContact() {
-      http
-        .post("/postContact", {
-          full_name: this.contact_full_name,
-          email: this.contact_email,
-          subject: this.contact_subject,
-          message: this.contact_message,
-        })
-        .then((res) => {
-          let { state } = res.data;
-          if (state == "success") {
-            alert("留言成功!");
-            this.contact_full_name = "";
-            this.contact_email = "";
-            this.contact_subject = "";
-            this.contact_message = "";
-          } else {
-            alert("留言失败！");
-          }
-        });
+      let userInfo = this.$store.state.userInfo;
+      if (
+        userInfo.isLogin &&
+        this.contact_full_name != "" &&
+        this.contact_email != "" &&
+        this.contact_subject != "" &&
+        this.contact_message != ""
+      ) {
+        http
+          .post("/postContact", {
+            user_name: userInfo.username,
+            full_name: this.contact_full_name,
+            email: this.contact_email,
+            subject: this.contact_subject,
+            message: this.contact_message,
+          })
+          .then((res) => {
+            let { state } = res.data;
+            if (state == "success") {
+              alert("留言成功!");
+              this.contact_full_name = "";
+              this.contact_email = "";
+              this.contact_subject = "";
+              this.contact_message = "";
+            } else {
+              alert("留言失败！");
+            }
+          });
+      } else if (!userInfo.isLogin) {
+        alert("您尚未登陆，请先登录再来留言！");
+        this.$router.push("/login");
+      } else {
+        alert("留言中任何一项不能为空！");
+      }
     },
   },
 };
@@ -210,7 +225,13 @@ export default {
   color: #04b4e0;
 }
 .btn-send {
+  border: 2px solid #04b4e0 !important;
+  background: transparent !important;
   cursor: pointer;
+}
+.btn-send:hover {
+  border: 2px solid #04b4e0 !important;
+  background: #04b4e0 !important;
 }
 .contact-form-title {
   font-size: 13px;

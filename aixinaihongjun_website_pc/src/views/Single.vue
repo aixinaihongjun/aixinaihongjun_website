@@ -2,7 +2,7 @@
   <div class="single">
     <!-- Arrows Nav -->
     <div class="return_btn">
-      <button @click="returnBlog">返回</button>
+      <button class="btn btn-primary" @click="returnBlog">返回</button>
     </div>
     <!-- End Arrows Nav -->
     <section data-id="single" class="animated-section no_padding">
@@ -38,7 +38,11 @@
                     {{ article.content2 }}
                   </p>
 
-                  <blockquote class="quote" v-for="quote in article.quote" :key="quote.content">
+                  <blockquote
+                    class="quote"
+                    v-for="quote in article.quote"
+                    :key="quote.content"
+                  >
                     {{ quote.content }}
                     <footer class="quote-author">
                       <span>{{ quote.author }}</span>
@@ -230,7 +234,7 @@ export default {
   },
   methods: {
     returnBlog() {
-      this.$router.push("/blog");
+      this.$router.go(-1); //返回上一界面，即blog界面
     },
     getArticleDetail(articleId) {
       this.articles.forEach((item) => {
@@ -246,18 +250,23 @@ export default {
 <style>
 .return_btn {
   position: relative;
-  top: 6.8px;
+  top: 10px;
   left: 10px;
   z-index: 98;
   list-style: none;
 }
 .return_btn button {
-  cursor: pointer;
-  border-radius: 30px;
   position: absolute;
-  text-align: center;
-  color: #fff;
-  font-size: 15px;
+  margin-bottom: 0;
+  width: 75px;
+  height: 48px;
+  background-color: #04b4e0 !important;
+  border: 1px solid #04b4e0 !important;
+}
+.return_btn button:hover {
+  color: #04b4e0 !important;
+  background-color: transparent !important;
+  border: 1px solid #04b4e0 !important;
 }
 .no_padding {
   padding: 0 !important;

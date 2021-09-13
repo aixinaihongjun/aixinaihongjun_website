@@ -7,6 +7,8 @@ import Contact from '../views/Contact.vue'
 import Portfolio from '../views/Portfolio.vue'
 import Resume from '../views/Resume.vue'
 import Single from '../views/Single.vue'
+import Login from '../views/Login.vue'
+import Register from '../views/Register.vue'
 
 Vue.use(VueRouter)
 
@@ -45,6 +47,16 @@ const routes = [
     path: '/blog/:articleId',
     name: 'Single',
     component: Single
+  },
+  {
+    path: '/login',
+    name: 'Login',
+    component: Login
+  },
+  {
+    path: '/register',
+    name: 'Register',
+    component: Register
   },
 ]
 
