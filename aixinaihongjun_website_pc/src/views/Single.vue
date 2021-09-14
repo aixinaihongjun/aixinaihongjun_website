@@ -8,7 +8,7 @@
     <section data-id="single" class="animated-section no_padding">
       <div class="single-page-content">
         <div class="post-thumbnail">
-          <img :src="article.cover" alt="image" style="width: 100%" />
+          <img :src="getImgUrl(article.cover)" alt="image" style="width: 100%" />
         </div>
 
         <div class="post-content">
@@ -38,14 +38,10 @@
                     {{ article.content2 }}
                   </p>
 
-                  <blockquote
-                    class="quote"
-                    v-for="quote in article.quote"
-                    :key="quote.content"
-                  >
-                    {{ quote.content }}
+                  <blockquote class="quote">
+                    {{ article.quote_content }}
                     <footer class="quote-author">
-                      <span>{{ quote.author }}</span>
+                      <span>{{ article.quote_author }}</span>
                     </footer>
                   </blockquote>
 
@@ -67,7 +63,9 @@
               <span class="entry-date">
                 <a href="#" rel="bookmark">
                   <span class="iconfont">&#xe680;</span>
-                  <span class="entry-date"> {{ article.date }}</span>
+                  <span class="entry-date">
+                    {{ article.date | dateFormat("YYYY-mm-dd") }}</span
+                  >
                 </a>
               </span>
               <span class="author vcard">
@@ -113,141 +111,123 @@
 
           <div class="post-tags">
             <div class="tags">
-              <a href="#" rel="tag" v-for="tag in article.tags" :key="tag">{{ tag }}</a>
+              <a href="#" rel="tag" v-for="tag in article.tags" :key="tag.tag_name">{{
+                tag.tag_name
+              }}</a>
+            </div>
+          </div>
+
+          <div class="pt-5 mt-5">
+            <h3 class="mb-5 font-weight-bold">{{ article.comments.length }}&nbsp;评论</h3>
+            <ul class="comment-list">
+              <li class="comment" v-for="comment in article.comments" :key="comment.id">
+                <div class="vcard bio">
+                  <img :src="getImgUrl(comment.portrait)" alt="Image placeholder" />
+                </div>
+                <div class="comment-body">
+                  <div class="flex_between">
+                    <p class="comment_name">{{ comment.user_name }}</p>
+                    <div class="meta">
+                      {{ comment.comment_time | dateFormat("YYYY-mm-dd HH:MM") }}
+                    </div>
+                  </div>
+                  <p class="comment_content">
+                    {{ comment.content }}
+                  </p>
+                </div>
+              </li>
+            </ul>
+
+            <div class="comment-form-wrap pt-5">
+              <h3 class="mb-5">发表评论</h3>
+              <div class="form-group">
+                <textarea
+                  id="message"
+                  cols="30"
+                  rows="10"
+                  class="form-control margin_buttom"
+                  v-model="commentContent"
+                ></textarea>
+              </div>
+              <div class="form-group">
+                <form>
+                  <input
+                  type="submit"
+                  value="发表评论"
+                  class="btn py-3 px-4 btn-primary btn_postComment"
+                  @click="postComment"
+                />
+                </form>
+              </div>
             </div>
           </div>
         </div>
+        <!-- .col-md-8 -->
       </div>
     </section>
   </div>
 </template>
 
 <script>
+import http from "@/utils/http.js";
+import myMixin from "@/utils/mixin.js";
 export default {
   name: "Single",
-  created() {
-    let articleId = this.$route.params.articleId;
-    this.getArticleDetail(articleId);
-  },
+  mixins: [myMixin],
   data() {
     return {
-      article: {},
-      articles: [
-        {
-          id: 1,
-          cover: require("../assets/images/blog_post_1.jpg"),
-          category: "Design",
-          a_title: "View all posts in Design",
-          date: "05 Mar 2020",
-          title: "Why I Switched to Sketch For UI Design",
-          content1:
-            "Nulla nulla nisl, sodales ac nulla ac, consequat vulputate purus. Curabitur tincidunt ipsum vel nibh rutrum accumsan. Nunc ullamcorper posuere leo, vitae aliquet risus pharetra in. Integer turpis eros, iaculis et mi non, pulvinar egestas leo. Etiam sagittis ex turpis, vitae cursus tortor interdum eu. Quisque ultrices nunc eget erat vestibulum euismod. Ut mauris nisi, facilisis at arcu nec, facilisis porttitor lorem.",
-          content2:
-            "Vivamus vitae neque molestie, porta libero sed, tincidunt leo. In nec posuere odio, id rhoncus lorem. Proin id erat ut dolor condimentum viverra. Praesent viverra sed dolor ac luctus. Praesent placerat id lorem quis lacinia.",
-          content3:
-            "Etiam interdum vulputate risus, vitae elementum neque consectetur sed. Donec at risus dui. Ut in suscipit neque. Vestibulum sit amet lobortis magna, commodo venenatis ante. Cras molestie, ex a auctor lacinia, risus est aliquam risus, sit amet semper purus tortor id ante. Donec lacus ipsum, porttitor et libero a, fringilla auctor quam. Sed in nisl id libero tincidunt aliquet. Aenean dui ipsum, auctor ut leo ut, semper dignissim lacus. Suspendisse faucibus viverra consequat. Maecenas efficitur massa vel eros sagittis dapibus. Nam lobortis mi in turpis hendrerit eleifend. Nulla non massa felis.",
-          content4:
-            "Donec sit amet dolor ante. Vivamus vel massa accumsan, faucibus quam quis, convallis velit. Aliquam erat volutpat. Integer imperdiet diam quis arcu venenatis, quis sagittis nibh rhoncus. Donec non nisi scelerisque, sodales metus quis, accumsan mauris. Curabitur volutpat risus rutrum erat condimentum tristique. Nullam at felis diam. Quisque dictum felis non ante pretium mollis. Aliquam turpis neque, varius nec diam a, aliquam pulvinar diam. Interdum et malesuada fames ac ante ipsum primis in faucibus. Sed ipsum libero, aliquet sed bibendum faucibus, semper a dui.",
-          quote: [
-            {
-              content:
-                "Maecenas id finibus felis. Etiam vitae nibh et felis efficitur pellentesque. Mauris suscipit sapien nunc, a lacinia nibh feugiat ut. In hac habitasse platea dictumst.",
-              author: "Larry L. Johnson",
-            },
-          ],
-          tags: ["animate", "bar", "design", "progress", "ui"],
-        },
-        {
-          id: 2,
-          cover: require("../assets/images/blog_post_2.jpg"),
-          category: "UI",
-          a_title: "View all posts in UI",
-          date: "23 Feb 2020",
-          title: "Best Practices for Animated Progress Indicators",
-          content1:
-            "Nulla nulla nisl, sodales ac nulla ac, consequat vulputate purus. Curabitur tincidunt ipsum vel nibh rutrum accumsan. Nunc ullamcorper posuere leo, vitae aliquet risus pharetra in. Integer turpis eros, iaculis et mi non, pulvinar egestas leo. Etiam sagittis ex turpis, vitae cursus tortor interdum eu. Quisque ultrices nunc eget erat vestibulum euismod. Ut mauris nisi, facilisis at arcu nec, facilisis porttitor lorem.",
-          content2:
-            "Vivamus vitae neque molestie, porta libero sed, tincidunt leo. In nec posuere odio, id rhoncus lorem. Proin id erat ut dolor condimentum viverra. Praesent viverra sed dolor ac luctus. Praesent placerat id lorem quis lacinia.",
-          content3:
-            "Etiam interdum vulputate risus, vitae elementum neque consectetur sed. Donec at risus dui. Ut in suscipit neque. Vestibulum sit amet lobortis magna, commodo venenatis ante. Cras molestie, ex a auctor lacinia, risus est aliquam risus, sit amet semper purus tortor id ante. Donec lacus ipsum, porttitor et libero a, fringilla auctor quam. Sed in nisl id libero tincidunt aliquet. Aenean dui ipsum, auctor ut leo ut, semper dignissim lacus. Suspendisse faucibus viverra consequat. Maecenas efficitur massa vel eros sagittis dapibus. Nam lobortis mi in turpis hendrerit eleifend. Nulla non massa felis.",
-          content4:
-            "Donec sit amet dolor ante. Vivamus vel massa accumsan, faucibus quam quis, convallis velit. Aliquam erat volutpat. Integer imperdiet diam quis arcu venenatis, quis sagittis nibh rhoncus. Donec non nisi scelerisque, sodales metus quis, accumsan mauris. Curabitur volutpat risus rutrum erat condimentum tristique. Nullam at felis diam. Quisque dictum felis non ante pretium mollis. Aliquam turpis neque, varius nec diam a, aliquam pulvinar diam. Interdum et malesuada fames ac ante ipsum primis in faucibus. Sed ipsum libero, aliquet sed bibendum faucibus, semper a dui.",
-          quote: [
-            {
-              content:
-                "Maecenas id finibus felis. Etiam vitae nibh et felis efficitur pellentesque. Mauris suscipit sapien nunc, a lacinia nibh feugiat ut. In hac habitasse platea dictumst.",
-              author: "Larry L. Johnson",
-            },
-          ],
-          tags: ["animate", "bar", "design", "progress", "ui"],
-        },
-        {
-          id: 3,
-          cover: require("../assets/images/blog_post_3.jpg"),
-          category: "Design",
-          a_title: "View all posts in Design",
-          date: "06 Feb 2020",
-          title: "Designing the Perfect Feature Comparison Table",
-          content1:
-            "Nulla nulla nisl, sodales ac nulla ac, consequat vulputate purus. Curabitur tincidunt ipsum vel nibh rutrum accumsan. Nunc ullamcorper posuere leo, vitae aliquet risus pharetra in. Integer turpis eros, iaculis et mi non, pulvinar egestas leo. Etiam sagittis ex turpis, vitae cursus tortor interdum eu. Quisque ultrices nunc eget erat vestibulum euismod. Ut mauris nisi, facilisis at arcu nec, facilisis porttitor lorem.",
-          content2:
-            "Vivamus vitae neque molestie, porta libero sed, tincidunt leo. In nec posuere odio, id rhoncus lorem. Proin id erat ut dolor condimentum viverra. Praesent viverra sed dolor ac luctus. Praesent placerat id lorem quis lacinia.",
-          content3:
-            "Etiam interdum vulputate risus, vitae elementum neque consectetur sed. Donec at risus dui. Ut in suscipit neque. Vestibulum sit amet lobortis magna, commodo venenatis ante. Cras molestie, ex a auctor lacinia, risus est aliquam risus, sit amet semper purus tortor id ante. Donec lacus ipsum, porttitor et libero a, fringilla auctor quam. Sed in nisl id libero tincidunt aliquet. Aenean dui ipsum, auctor ut leo ut, semper dignissim lacus. Suspendisse faucibus viverra consequat. Maecenas efficitur massa vel eros sagittis dapibus. Nam lobortis mi in turpis hendrerit eleifend. Nulla non massa felis.",
-          content4:
-            "Donec sit amet dolor ante. Vivamus vel massa accumsan, faucibus quam quis, convallis velit. Aliquam erat volutpat. Integer imperdiet diam quis arcu venenatis, quis sagittis nibh rhoncus. Donec non nisi scelerisque, sodales metus quis, accumsan mauris. Curabitur volutpat risus rutrum erat condimentum tristique. Nullam at felis diam. Quisque dictum felis non ante pretium mollis. Aliquam turpis neque, varius nec diam a, aliquam pulvinar diam. Interdum et malesuada fames ac ante ipsum primis in faucibus. Sed ipsum libero, aliquet sed bibendum faucibus, semper a dui.",
-          quote: [
-            {
-              content:
-                "Maecenas id finibus felis. Etiam vitae nibh et felis efficitur pellentesque. Mauris suscipit sapien nunc, a lacinia nibh feugiat ut. In hac habitasse platea dictumst.",
-              author: "Larry L. Johnson",
-            },
-          ],
-          tags: ["animate", "bar", "design", "progress", "ui"],
-        },
-        {
-          id: 4,
-          cover: require("../assets/images/blog_post_4.jpg"),
-          category: "UI",
-          a_title: "View all posts in E-Commerce",
-          date: "07 Jan 2020",
-          title: "An Overview of E-Commerce Platforms",
-          content1:
-            "Nulla nulla nisl, sodales ac nulla ac, consequat vulputate purus. Curabitur tincidunt ipsum vel nibh rutrum accumsan. Nunc ullamcorper posuere leo, vitae aliquet risus pharetra in. Integer turpis eros, iaculis et mi non, pulvinar egestas leo. Etiam sagittis ex turpis, vitae cursus tortor interdum eu. Quisque ultrices nunc eget erat vestibulum euismod. Ut mauris nisi, facilisis at arcu nec, facilisis porttitor lorem.",
-          content2:
-            "Vivamus vitae neque molestie, porta libero sed, tincidunt leo. In nec posuere odio, id rhoncus lorem. Proin id erat ut dolor condimentum viverra. Praesent viverra sed dolor ac luctus. Praesent placerat id lorem quis lacinia.",
-          content3:
-            "Etiam interdum vulputate risus, vitae elementum neque consectetur sed. Donec at risus dui. Ut in suscipit neque. Vestibulum sit amet lobortis magna, commodo venenatis ante. Cras molestie, ex a auctor lacinia, risus est aliquam risus, sit amet semper purus tortor id ante. Donec lacus ipsum, porttitor et libero a, fringilla auctor quam. Sed in nisl id libero tincidunt aliquet. Aenean dui ipsum, auctor ut leo ut, semper dignissim lacus. Suspendisse faucibus viverra consequat. Maecenas efficitur massa vel eros sagittis dapibus. Nam lobortis mi in turpis hendrerit eleifend. Nulla non massa felis.",
-          content4:
-            "Donec sit amet dolor ante. Vivamus vel massa accumsan, faucibus quam quis, convallis velit. Aliquam erat volutpat. Integer imperdiet diam quis arcu venenatis, quis sagittis nibh rhoncus. Donec non nisi scelerisque, sodales metus quis, accumsan mauris. Curabitur volutpat risus rutrum erat condimentum tristique. Nullam at felis diam. Quisque dictum felis non ante pretium mollis. Aliquam turpis neque, varius nec diam a, aliquam pulvinar diam. Interdum et malesuada fames ac ante ipsum primis in faucibus. Sed ipsum libero, aliquet sed bibendum faucibus, semper a dui.",
-          quote: [
-            {
-              content:
-                "Maecenas id finibus felis. Etiam vitae nibh et felis efficitur pellentesque. Mauris suscipit sapien nunc, a lacinia nibh feugiat ut. In hac habitasse platea dictumst.",
-              author: "Larry L. Johnson",
-            },
-          ],
-          tags: ["animate", "bar", "design", "progress", "ui"],
-        },
-      ],
+      article: {
+        id: "",
+      },
+      commentContent: "",
     };
+  },
+  created() {
+    this.article.id = this.$route.params.articleId;
+    this.getArticleDetail();
   },
   methods: {
     returnBlog() {
       this.$router.go(-1); //返回上一界面，即blog界面
     },
-    getArticleDetail(articleId) {
-      this.articles.forEach((item) => {
-        if (articleId == item.id) {
-          this.article = item;
-        }
+    getArticleDetail() {
+      http.get("/getArticleDetail/" + this.article.id).then((res) => {
+        this.article = res.data;
       });
+    },
+    postComment() {
+      let userInfo = this.$store.state.userInfo;
+      if (userInfo.isLogin && this.commentContent != "") {
+        http
+          .post("/postComment", {
+            user_name: userInfo.username,
+            blog_id: this.article.id,
+            content: this.commentContent,
+          })
+          .then((res) => {
+            let { state } = res.data;
+            if (state == "success") {
+              alert("评论成功！");
+              this.commentContent = "";
+            } else {
+              alert("评论失败！");
+            }
+          });
+      } else if (!userInfo.isLogin) {
+        alert("您尚未登录，请先登录再来评论！");
+        this.$router.push("/login");
+      } else {
+        alert("评论内容不得为空！");
+      }
     },
   },
 };
 </script>
 
 <style>
+.margin_buttom {
+  margin-bottom: 48px !important;
+}
 .return_btn {
   position: relative;
   top: 10px;
@@ -273,5 +253,26 @@ export default {
 }
 .content_mb {
   margin-bottom: 10px;
+}
+.btn_postComment {
+  border: 2px solid #04b4e0 !important;
+  background: transparent !important;
+  cursor: pointer;
+}
+.btn_postComment:hover {
+  border: 2px solid #04b4e0 !important;
+  background: #04b4e0 !important;
+  color: #fff !important;
+}
+.flex_between {
+  display: flex;
+  justify-content: space-between;
+}
+.comment_name {
+  color: #ccc;
+}
+.comment_content {
+  font-size: 24px;
+  color: #fff;
 }
 </style>
