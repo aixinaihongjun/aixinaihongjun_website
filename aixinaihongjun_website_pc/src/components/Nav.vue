@@ -97,6 +97,7 @@ export default {
   methods: {
     selectNav() {
       this.isSelect = this.$route.name;
+      console.log(this.isSelect);
     },
     mobileNavOpen() {
       this.mobile_menu_hide_default_state = !this.mobile_menu_hide_default_state;

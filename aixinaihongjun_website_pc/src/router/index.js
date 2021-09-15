@@ -29,6 +29,11 @@ const routes = [
     component: Blog
   },
   {
+    path: '/blog/:articleId',
+    name: 'Blog',
+    component: Single
+  },
+  {
     path: '/contact',
     name: 'Contact',
     component: Contact
@@ -42,11 +47,6 @@ const routes = [
     path: '/resume',
     name: 'Resume',
     component: Resume
-  },
-  {
-    path: '/blog/:articleId',
-    name: 'Single',
-    component: Single
   },
   {
     path: '/login',

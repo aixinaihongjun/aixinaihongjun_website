@@ -205,7 +205,6 @@ export default {
           .then((res) => {
             let { state } = res.data;
             if (state == "success") {
-              this.commentContent = "";
               alert("评论成功！");
               window.location.reload();
             } else {
