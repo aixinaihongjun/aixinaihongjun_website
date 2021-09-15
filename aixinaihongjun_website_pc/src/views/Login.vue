@@ -23,12 +23,18 @@
             />
           </div>
 
-          <div class="form-login">
+          <div class="form-login form-flex">
             <input
               type="button"
               value="登录"
               class="btn btn-primary py-2 px-3"
               @click="login()"
+            />
+            <input
+              type="button"
+              value="没有帐户？点我注册"
+              class="btn btn-primary py-2 px-3"
+              @click="register()"
             />
           </div>
         </div>
@@ -69,6 +75,9 @@ export default {
         alert("登录中任意一项不能为空！");
       }
     },
+    register() {
+      this.$router.push("/register");
+    }
   },
 };
 </script>
@@ -76,6 +85,10 @@ export default {
 <style>
 .form-login {
   margin: 0 0 21.5px;
+}
+.form-flex {
+  display: flex;
+  justify-content: space-between;
 }
 .login_view {
   width: 100%;

@@ -200,11 +200,11 @@ export default {
           .then((res) => {
             let { state } = res.data;
             if (state == "success") {
-              alert("留言成功!");
               this.contact_full_name = "";
               this.contact_email = "";
               this.contact_subject = "";
               this.contact_message = "";
+              alert("留言成功!");
             } else {
               alert("留言失败！");
             }

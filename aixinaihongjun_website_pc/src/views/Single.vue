@@ -139,25 +139,23 @@
             </ul>
 
             <div class="comment-form-wrap pt-5">
-              <h3 class="mb-5">发表评论</h3>
               <div class="form-group">
                 <textarea
                   id="message"
                   cols="30"
                   rows="10"
                   class="form-control margin_buttom"
+                  placeholder="发一条友善的评论"
                   v-model="commentContent"
                 ></textarea>
               </div>
               <div class="form-group">
-                <form>
-                  <input
-                  type="submit"
+                <input
+                  type="button"
                   value="发表评论"
                   class="btn py-3 px-4 btn-primary btn_postComment"
                   @click="postComment"
                 />
-                </form>
               </div>
             </div>
           </div>
@@ -207,8 +205,9 @@ export default {
           .then((res) => {
             let { state } = res.data;
             if (state == "success") {
-              alert("评论成功！");
               this.commentContent = "";
+              alert("评论成功！");
+              window.location.reload();
             } else {
               alert("评论失败！");
             }
