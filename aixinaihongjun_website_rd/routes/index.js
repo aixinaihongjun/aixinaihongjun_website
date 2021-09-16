@@ -78,7 +78,7 @@ router.get('/getArticleDetail/:id', async (ctx) => {
     let results = await getQueryData(sql, [articleId]);
     let article = results[0];
 
-    let sql2 = `select t_comment.*, t_user.* from t_comment, t_user where t_comment.user_name=t_user.username and t_comment.blog_id=?`;
+    let sql2 = `select t_comment.*, t_user.portrait from t_comment, t_user where t_comment.user_name=t_user.username and t_comment.blog_id=?`;
 
     let results2 = await getQueryData(sql2, [articleId]);
 

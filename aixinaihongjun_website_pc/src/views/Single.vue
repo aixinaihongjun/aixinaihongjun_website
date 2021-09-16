@@ -176,6 +176,7 @@ export default {
     return {
       article: {
         id: "",
+        comments: [],
       },
       commentContent: "",
     };
